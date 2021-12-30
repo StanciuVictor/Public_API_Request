@@ -66,7 +66,7 @@ const formHTML = `
 `;
 searchCont.innerHTML = formHTML;
 
-
+let userIndex = null;
 gallery.addEventListener('click', (e) => {
   // If the target does not have 'gallery' in class list
   // If any part of a user item is clicked
@@ -77,8 +77,8 @@ gallery.addEventListener('click', (e) => {
 
     // Set index to be the card's number in the order they are displayed
     // e.g. First card --> index 0 (regardless of the indexes of grand/children in the array)
-    const userIndex = Math.floor(galleryArray.indexOf(e.target) / 7);
-    console.log(userIndex);
+    userIndex = Math.floor(galleryArray.indexOf(e.target) / 7);
+    console.log('Current user', userIndex);
 
     displayModal(userIndex);
   }
@@ -131,6 +131,44 @@ function displayModal (index) {
   const closeBtn = document.getElementById('modal-close-btn');
   closeBtn.addEventListener('click', () => {
     document.querySelector('div.modal-container').remove();
+  });
+
+  // Add functionality to Prev and Next buttons
+  const prevBtn = document.getElementById('modal-prev');
+  const nextBtn = document.getElementById('modal-next');
+
+  prevBtn.addEventListener('click', () => {
+    // If the user currently displayed in modal is not the first in the array
+    if (userIndex >= 1) {
+      // Remove the current modal
+      document.querySelector('div.modal-container').remove();
+      // Set the index to the previous user
+      userIndex--;
+      console.log('Current user', userIndex);
+      // Display a new modal with the previous user
+      displayModal(userIndex);
+
+      // If the user currently displayed in modal is the first in the array
+    } else {
+      // prevBtn.disabled = true;
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    // If the user currently displayed in modal is not the last in the array
+    if (userIndex <= 10) {
+      // Remove the current modal
+      document.querySelector('div.modal-container').remove();
+      // Set the index to the next user
+      userIndex++;
+      console.log('Current user', userIndex);
+      // Display a new modal with the next user
+      displayModal(userIndex);
+
+      // If the user currently displayed in modal is the last in the array
+    } else {
+      // nextBtn.disabled = true;
+    }
   });
 }
 
