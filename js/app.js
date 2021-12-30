@@ -66,6 +66,7 @@ const formHTML = `
 `;
 searchCont.innerHTML = formHTML;
 
+
 gallery.addEventListener('click', (e) => {
   // If the target does not have 'gallery' in class list
   // If any part of a user item is clicked
@@ -76,40 +77,60 @@ gallery.addEventListener('click', (e) => {
 
     // Set index to be the card's number in the order they are displayed
     // e.g. First card --> index 0 (regardless of the indexes of grand/children in the array)
-    const index = Math.floor(galleryArray.indexOf(e.target) / 7);
-    console.log(index);
+    const userIndex = Math.floor(galleryArray.indexOf(e.target) / 7);
+    console.log(userIndex);
 
-    const modalHTML = `
-      <div class="modal-container">
-        <div class="modal">
-          <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-            <div class="modal-info-container">
-            <img class="modal-img" src=${usersInfo[index].picture.large} alt="profile picture">
-            <h3 id="name" class="modal-name cap">${usersInfo[index].name.first} ${usersInfo[index].name.last}</h3>
-            <p class="modal-text">${usersInfo[index].email}</p>
-            <p class="modal-text cap">${usersInfo[index].location.city}</p>
-            <hr>
-            <p class="modal-text">${usersInfo[index].cell}</p>
-            <p class="modal-text">
-              ${usersInfo[index].location.street.number} 
-              ${usersInfo[index].location.street.name} 
-              ${usersInfo[index].location.city} 
-              ${usersInfo[index].location.state}
-              ${usersInfo[index].location.postcode}
-            </p>
-            <p class="modal-text">Birthday: ${usersInfo[index].dob.date}</p>
-          </div>
-        </div>
-
-        // IMPORTANT: Below is only for exceeds tasks 
-        <div class="modal-btn-container">
-          <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-          <button type="button" id="modal-next" class="modal-next btn">Next</button>
-        </div>
-      </div>
-    `;
-    script.insertAdjacentHTML('beforebegin', modalHTML);
+    displayModal(userIndex);
   }
 });
 
-// no, str, city, state, postcode
+/**
+ * Create HTML markup for Modal
+ * Display modal
+ * Add event listeners for modal's buttons
+ * 
+ * @param {number} index - The index of clicked user, in the users array
+ */
+function displayModal (index) {
+  // Create HTML markup
+  const modalHTML = `
+    <div class="modal-container">
+      <div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+          <div class="modal-info-container">
+          <img class="modal-img" src=${usersInfo[index].picture.large} alt="profile picture">
+          <h3 id="name" class="modal-name cap">${usersInfo[index].name.first} ${usersInfo[index].name.last}</h3>
+          <p class="modal-text">${usersInfo[index].email}</p>
+          <p class="modal-text cap">${usersInfo[index].location.city}</p>
+          <hr>
+          <p class="modal-text">${usersInfo[index].cell}</p>
+          <p class="modal-text">
+            ${usersInfo[index].location.street.number} 
+            ${usersInfo[index].location.street.name} 
+            ${usersInfo[index].location.city} 
+            ${usersInfo[index].location.state} 
+            ${usersInfo[index].location.postcode}
+          </p>
+          <p class="modal-text">Birthday: ${usersInfo[index].dob.date}</p>
+        </div>
+      </div>
+
+      // IMPORTANT: Below is only for exceeds tasks 
+      <div class="modal-btn-container">
+        <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+        <button type="button" id="modal-next" class="modal-next btn">Next</button>
+      </div>
+    </div>
+  `;
+  // Display modal
+  script.insertAdjacentHTML('beforebegin', modalHTML);
+
+  // ##### Event Listeners #####
+
+  // Remove displayed modal when "x" is clicked
+  const closeBtn = document.getElementById('modal-close-btn');
+  closeBtn.addEventListener('click', () => {
+    document.querySelector('div.modal-container').remove();
+  });
+}
+
