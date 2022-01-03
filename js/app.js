@@ -48,7 +48,10 @@ function checkStatus (response) {
  * @param {array} users - Each element of the array represents info on one user
  */
 function displayUsers (users) {
-  console.log('usersInfo', users);
+  // console.log('usersInfo', users);
+  // Make sure the "No results" is removed
+  gallery.innerHTML = '';
+
   users.forEach(user => {
     const userHTML = `
       <div class="card">
@@ -248,5 +251,9 @@ function searchFn (usersInfo, search) {
     }
   }
   // console.log(filteredList);
-  displayUsers(filteredList);
+  if (filteredList.length !== 0) {
+    displayUsers(filteredList);
+  } else {
+    gallery.innerHTML = `<p class="no-results">No results found! ${String.fromCodePoint(0x1f615)}</p>`;
+  }
 }

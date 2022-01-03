@@ -79,6 +79,20 @@ header h1 {
   margin: auto;
 }
 
+p.no-results {
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  padding: 2em 0;
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: #4a5568;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
 .card {
   display: flex;
   flex-direction: row;
