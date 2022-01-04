@@ -95,6 +95,30 @@ gallery.addEventListener('click', (e) => {
 });
 
 /**
+ * Format cellphone number
+ * See regexr.com/6ckua for more
+ * 
+ * @param {string} text - Cell phone number
+ * @returns Cell phone number, formatted: (123) 456-7890
+ */
+function formatTelephone (text) {
+  const regex = /^\D*(\d{3})\D*(\d{3})\D*(\d{4})\D*$/;
+  return text.replace(regex, '($1) $2-$3');
+}
+
+/**
+ * Format the date of birth
+ * See regexr.com/6ckuj for more
+ * 
+ * @param {string} text - Date of Birth
+ * @returns Date of Birth, formatted: mm/dd/yyyy
+ */
+function formatDoB (text) {
+  const regex = /^(\d{4})-(\d{2})-(\d{2}).+$/;
+  return text.replace(regex, '$2/$3/$1');
+}
+
+/**
  * Create HTML markup for Modal
  * Display modal
  * Add event listeners for modal's buttons
@@ -113,7 +137,7 @@ function displayModal (user) {
           <p class="modal-text">${user.email}</p>
           <p class="modal-text cap">${user.location.city}</p>
           <hr>
-          <p class="modal-text">${user.cell}</p>
+          <p class="modal-text">${formatTelephone(user.cell)}</p>
           <p class="modal-text">
             ${user.location.street.number}
             ${user.location.street.name}
@@ -121,7 +145,7 @@ function displayModal (user) {
             ${user.location.state}
             ${user.location.postcode}
           </p>
-          <p class="modal-text">Birthday: ${user.dob.date}</p>
+          <p class="modal-text">Birthday: ${formatDoB(user.dob.date)}</p>
         </div>
       </div>
 
